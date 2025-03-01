@@ -1,2 +1,3 @@
-# CSIS516
-Final Project CSIS516
+pip install react
+pip install django
+pip install mysql
