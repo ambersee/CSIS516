@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import messagebox
 
 class BudgetPlanner:
     def __init__(self):
@@ -15,58 +17,101 @@ class BudgetPlanner:
 
     def calculate_savings(self):
         total_expenses = sum(self.monthly_expenses.values())
-        savings = self.monthly_income - total_expenses
-        return savings
+        return self.monthly_income - total_expenses
 
-    def get_monthly_income(self):
-        return self.monthly_income
+class BudgetApp:
+    def __init__(self, root):
+        self.budget = BudgetPlanner()
 
-    def get_monthly_expenses(self):
-        return self.monthly_expenses
+        root.title("Budget Planner")
+        root.geometry("400x400")
 
-    def get_savings(self):
-        return self.calculate_savings()
+        # Income Section
+        self.income_label = tk.Label(root, text="Enter Monthly Income:")
+        self.income_label.pack()
+        self.income_entry = tk.Entry(root)
+        self.income_entry.pack()
+        self.add_income_btn = tk.Button(root, text="Add Income", command=self.add_income)
+        self.add_income_btn.pack()
 
-    def get_total_expenses(self):
-        return sum(self.monthly_expenses.values())
+        # Expenses Section
+        self.expense_label = tk.Label(root, text="Enter Expense Category and Amount:")
+        self.expense_label.pack()
 
-    def get_remaining_income(self):
-        return self.monthly_income - self.get_total_expenses()
+        self.expense_category_entry = tk.Entry(root)
+        self.expense_category_entry.insert(0, "Category")
+        self.expense_category_entry.bind("<FocusIn>", self.clear_placeholder_category)
+        self.expense_category_entry.bind("<FocusOut>", self.restore_placeholder_category)
+        self.expense_category_entry.pack()
 
-    def get_expense_percentage(self, category):
-        total_expenses = sum(self.monthly_expenses.values())
-        if total_expenses == 0:
-            return 0
+        self.expense_amount_entry = tk.Entry(root)
+        self.expense_amount_entry.insert(0, "Amount")
+        self.expense_amount_entry.bind("<FocusIn>", self.clear_placeholder_amount)
+        self.expense_amount_entry.bind("<FocusOut>", self.restore_placeholder_amount)
+        self.expense_amount_entry.pack()
 
-       return (self.monthly_expenses[category] / total_expenses) * 100
+        self.add_expense_btn = tk.Button(root, text="Add Expense", command=self.add_expense)
+        self.add_expense_btn.pack()
 
-    def get_expense_categories(self):
-        return list(self.monthly_expenses.keys())
+        # Show Summary Button
+        self.summary_btn = tk.Button(root, text="Show Summary", command=self.show_summary)
+        self.summary_btn.pack()
 
-    def reset(self):
-        self.monthly_income = 0
-        self.monthly_expenses = {}
+        # Summary Output
+        self.result_label = tk.Label(root, text="", fg="blue")
+        self.result_label.pack()
 
-    if __name__ == '__main__':
-        planner = BudgetPlanner()
+    # Placeholder Functions
+    def clear_placeholder_category(self, event):
+        if self.expense_category_entry.get() == "Category":
+            self.expense_category_entry.delete(0, tk.END)
+            self.expense_category_entry.config(fg="black")
 
-        while True:
+    def restore_placeholder_category(self, event):
+        if not self.expense_category_entry.get():
+            self.expense_category_entry.insert(0, "Category")
+            self.expense_category_entry.config(fg="gray")
 
-          print("\nBudget Planner Menu:")
-          print("1. Add Monthly Income")
-          print("2. Add Monthly Expense")
-          print("3. Calculate Savings")
-          print("4. Get Monthly Income")
-          print("5. Get Monthly Expenses")
-          print("6. Get Savings")
-          print("7. Get Total Expenses")
-          print("8. Get Remaining Income")
-          print("9. Get Expense Percentage")
-          print("10. View Expense Categories")
-          print("11. Reset")
+    def clear_placeholder_amount(self, event):
+        if self.expense_amount_entry.get() == "Amount":
+            self.expense_amount_entry.delete(0, tk.END)
+            self.expense_amount_entry.config(fg="black")
 
-          choice = input("Enter your choice (1-11): ")
+    def restore_placeholder_amount(self, event):
+        if not self.expense_amount_entry.get():
+            self.expense_amount_entry.insert(0, "Amount")
+            self.expense_amount_entry.config(fg="gray")
 
-          if choice == '1':
-              amount = float(input("Enter monthly income: "))
-              planner.add_monthly_income(amount)
+    # Functions to Add Income and Expenses
+    def add_income(self):
+        try:
+            income = float(self.income_entry.get())
+            self.budget.add_monthly_income(income)
+            self.income_entry.delete(0, tk.END)
+            messagebox.showinfo("Success", "Income added successfully!")
+        except ValueError:
+            messagebox.showerror("Error", "Please enter a valid number.")
+
+    def add_expense(self):
+        category = self.expense_category_entry.get()
+        try:
+            amount = float(self.expense_amount_entry.get())
+            self.budget.add_monthly_expense(category, amount)
+            self.expense_category_entry.delete(0, tk.END)
+            self.expense_amount_entry.delete(0, tk.END)
+            messagebox.showinfo("Success", "Expense added successfully!")
+        except ValueError:
+            messagebox.showerror("Error", "Please enter a valid amount.")
+
+    def show_summary(self):
+        savings = self.budget.calculate_savings()
+        summary_text = f"Total Income: ${self.budget.monthly_income}\n" \
+                       f"Total Expenses: ${sum(self.budget.monthly_expenses.values())}\n" \
+                       f"Savings: ${savings}"
+        self.result_label.config(text=summary_text)
+
+# Run the App
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = BudgetApp(root)
+    root.mainloop()
