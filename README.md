@@ -1,3 +1,9 @@
+Budget Planner App - used to help track expenses and savings.
+The purpose and value of this app is to help people with their finances and budget planning is an important part of that.
+Tech used = Tkinter, python, visual code, and chat gpt to figure out how to fix the errors that occurred throughout the process so far. 
+
+Code so far:
+
 import tkinter as tk
 from tkinter import messagebox
 
