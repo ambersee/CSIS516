@@ -5,7 +5,7 @@ Tech used = Flask, python, visual code, and chat gpt to figure out how to fix th
 
 #Clone the repository
 
-git clone https://github.com/yourusername/budget-tracker.git
+git clone git clone https://github.com/yourusername/budget-tracker.git
 cd budget-tracker
 
 #Create a Virtual Environment
