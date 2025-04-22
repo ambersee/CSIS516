@@ -11,13 +11,17 @@ The purpose and value of this app is to help people with their finances and budg
 - Jinja2 (Flask template engine)
 
 #Clone the repository
+
 git clone https://github.com/ambersee/CSIS516.git
+
 cd CSIS516
 
 #install
+
 pip install flask
 
 #run the app
+
 python app.py
 
 #open browser
