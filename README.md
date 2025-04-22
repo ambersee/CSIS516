@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 #run the app
 
-python app.py
+python budget.py
 
 #open browser
 
