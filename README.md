@@ -18,13 +18,11 @@ cd CSIS516
 
 #install
 
-pip install flask
+pip install -r requirements.txt
 
-#run the app
-
-python app.py
 
 #open browser
+
 http://127.0.0.1:5000/
 
 
