@@ -13,6 +13,11 @@ git clone https://github.com/ambersee/CSIS516.git
 
 cd CSIS516
 
+#Codes
+
+Using Visual Studio Code make two seperate files (HTML and budget.py)
+copy and paste the codes for each
+
 #install
 
 pip install -r requirements.txt
