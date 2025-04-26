@@ -15,7 +15,7 @@ cd CSIS516
 
 #Codes
 
-Using Visual Studio Code make two seperate files (HTML and budget.py)
+Using Visual Studio Code make three seperate files (HTML, budget.py and requirements.txt)
 copy and paste the codes for each
 
 #install
